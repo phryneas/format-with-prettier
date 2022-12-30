@@ -1,0 +1,23 @@
+{
+  "name": "prettier-textarea",
+  "version": "0.0.1",
+  "author": "Lenz Weber <mail@lenzw.de>",
+  "license": "MIT",
+  "devDependencies": {
+    "@parcel/config-webextension": "^2.8.2",
+    "parcel": "^2.8.2",
+    "typescript": "^4.9.4",
+    "web-ext": "^7.4.0"
+  },
+  "scripts": {
+    "watch": "npm run parcel:start",
+    "build": "npm run parcel:build; npm run ext:build",
+    "lint": "npm run ext:lint",
+    "firefox": "npm run ext:run",
+    "parcel:start": "parcel watch src/manifest.json --host localhost --config @parcel/config-webextension",
+    "parcel:build": "parcel build src/manifest.json --config @parcel/config-webextension",
+    "ext:run": "web-ext run -s ./dist --devtools",
+    "ext:build": "web-ext run -s ./dist",
+    "ext:lint": "web-ext lint -s ./dist"
+  }
+}
