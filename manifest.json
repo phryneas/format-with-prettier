@@ -1,0 +1,17 @@
+{
+  "manifest_version": 2,
+  "name": "prettier-code",
+  "description": "Use prettier from your browser!",
+  "version": "0.0.1",
+  "icons": {
+    "64": "icons/icon.png"
+  },
+  "background": {
+    "scripts": [
+      "background_script.js"
+    ]
+  },
+  "options_ui": {
+    "page": "options/index.html"
+  }
+}
