@@ -2,6 +2,7 @@ import type { Options as FormatOptions } from "prettier";
 import { getOption } from "./options";
 import { AvailableParser } from "./plugins";
 import { FormatRequest, FormatResponse } from "./types";
+import { runtime } from "webextension-polyfill";
 
 async function __prettierTextArea(parser: AvailableParser) {
   try {
@@ -23,7 +24,7 @@ async function __prettierTextArea(parser: AvailableParser) {
       code: element.value,
       options,
     };
-    const response: FormatResponse = await browser.runtime.sendMessage(request);
+    const response: FormatResponse = await runtime.sendMessage(request);
     if (response.error) throw new Error(response.error);
     element.value = response.formatted;
   } catch (e) {

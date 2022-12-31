@@ -1,6 +1,7 @@
-import { defaultOptions, getOption, getOptions, ExtensionOptions, setOption } from "../options";
+import { defaultOptions, getOption, getOptions, setOption } from "../options";
 import { parsersByName } from "../plugins";
 import { FormatRequest, FormatResponse } from "../types";
+import { runtime } from "webextension-polyfill";
 
 init().catch((e) => {
   console.error("error in options page", e.toString());
@@ -37,7 +38,7 @@ async function init() {
         options: { parser: "json5" },
         unparsedOptions: value,
       };
-      const response: FormatResponse = await browser.runtime.sendMessage(request);
+      const response: FormatResponse = await runtime.sendMessage(request);
       await setOption("prettierOptions", response.formatted);
       if (response.error) {
         alert(response.error);

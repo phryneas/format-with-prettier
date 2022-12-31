@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json.schemastore.org/chrome-manifest.json",
+  "manifest_version": 3,
+  "name": "Format with Prettier",
+  "description": "Use prettier from your browser!",
+  "version": "0.0.1",
+  "background": {
+    "service_worker": "background.ts",
+    "type": "module"
+  },
+  "options_ui": {
+    "page": "options/index.html",
+    "browser_style": true
+  },
+  "permissions": ["activeTab", "contextMenus", "storage"]
+}

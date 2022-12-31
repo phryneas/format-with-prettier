@@ -23,11 +23,13 @@
   "scripts": {
     "watch": "npm run clean && npm run parcel:start",
     "build": "npm run clean && npm run parcel:build && npm run ext:build",
+    "build:chrome": "npm run clean && npm run parcel:build:chrome && npm run ext:build",
     "lint": "npm run ext:lint",
     "firefox": "npm run ext:run",
-    "clean": "rimraf dist",
+    "clean": "rimraf dist web-ext-artifacts",
     "parcel:start": "parcel watch src/manifest.json --host localhost",
     "parcel:build": "parcel build src/manifest.json",
+    "parcel:build:chrome": "parcel build src/manifest-chrome.json && mv dist/manifest-chrome.json dist/manifest.json",
     "ext:run": "web-ext run -s ./dist --devtools",
     "ext:build": "web-ext build -s ./dist",
     "ext:lint": "web-ext lint -s ./dist"

@@ -4,6 +4,7 @@ import { getOption, onOptionChange } from "./options";
 import { AvailableParser, getEnabledParsersWithName, getEnabledPluginsByParserName } from "./plugins";
 import type { FormatRequest, FormatResponse } from "./types";
 import { parse as parseJson } from "json5";
+import * as browser from "webextension-polyfill";
 
 const prettier = import("prettier/standalone");
 
@@ -87,7 +88,7 @@ async function ensureScriptLoaded(currentTab: Tabs.Tab) {
   });
 
   if (!results || results[0] !== true) {
-    const file = new URL("injected.ts", import.meta.url).toString();
+    const file = new URL("injected.ts", import.meta.url).pathname;
     return browser.tabs.executeScript(currentTab.id, { file });
   }
 }
