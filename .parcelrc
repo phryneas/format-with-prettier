@@ -1,6 +1,9 @@
 {
   "extends": "@parcel/config-webextension",
   "transformers": {
+    "manifest-*.json": [
+      "@parcel/transformer-webextension"
+    ],
     "*.{js,mjs,jsm,jsx,es6,cjs,ts,tsx}": [
       "parcel-transformer-replace",
       "@parcel/transformer-babel",
