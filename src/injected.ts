@@ -1,8 +1,5 @@
-import type {
-  BuiltInParserName,
-  Options as FormatOptions,
-  Plugin,
-} from "prettier";
+import type { Options as FormatOptions } from "prettier";
+import { AvailableParser } from "./plugins";
 import { FormatRequest, FormatResponse } from "./types";
 
 function requireWebAccessibleResource(mod: string) {
@@ -11,7 +8,7 @@ function requireWebAccessibleResource(mod: string) {
   return import(url);
 }
 
-async function __prettierTextArea(parser: BuiltInParserName) {
+async function __prettierTextArea(parser: AvailableParser) {
   console.log({ parser });
   try {
     const element = [

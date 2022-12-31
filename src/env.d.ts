@@ -1,6 +1,6 @@
-import { BuiltInParserName } from "prettier";
 import { Browser } from "webextension-polyfill";
+import { AvailableParser } from "./plugins";
 declare global {
   const browser: Browser;
-  function __prettierTextArea(parser: BuiltInParserName): void;
+  function __prettierTextArea(parser: AvailableParser): void;
 }
