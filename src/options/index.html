@@ -12,16 +12,15 @@
       <textarea name="prettier-options"></textarea>
       <button id="prettier-options-reset" style="align-self: end">reset to defaults</button>
     </section>
-    <section>
+    <section id="parsers">
       <h2>Parsers</h2>
-      <ul id="parsers" style="list-style: none; padding-left: 0"></ul>
-      <template id="parser-template">
-        <li>
-          <label><input type="checkbox" name="parser" /><span class="description"></span></label>
-        </li>
-      </template>
     </section>
-
+    <section id="other">
+      <h2>Other</h2>
+    </section>
+    <template id="checkbox-template">
+      <label><input type="checkbox" /><span class="description"></span></label>
+    </template>
     <script type="module" src="options-script.ts"></script>
   </body>
 </html>

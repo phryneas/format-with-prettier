@@ -11,7 +11,7 @@
     "page": "options/index.html",
     "browser_style": true
   },
-  "permissions": ["activeTab", "contextMenus", "clipboardWrite", "storage"],
+  "permissions": ["activeTab", "contextMenus", "storage"],
   "browser_specific_settings": {
     "gecko": {
       "id": "format-with-prettier@phryneas.de"

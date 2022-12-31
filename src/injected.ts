@@ -1,4 +1,5 @@
 import type { Options as FormatOptions } from "prettier";
+import { getOption } from "./options";
 import { AvailableParser } from "./plugins";
 import { FormatRequest, FormatResponse } from "./types";
 
@@ -23,11 +24,15 @@ async function __prettierTextArea(parser: AvailableParser) {
       options,
     };
     const response: FormatResponse = await browser.runtime.sendMessage(request);
+    if (response.error) throw new Error(response.error);
     element.value = response.formatted;
   } catch (e) {
     const msg = `formatting with parser ${parser} failed: 
     ${e?.toString()}`;
-    alert(msg);
+    console.log(await getOption("alertOnFormatError"));
+    if (await getOption("alertOnFormatError")) {
+      alert(msg);
+    }
     console.error(msg);
   }
 }

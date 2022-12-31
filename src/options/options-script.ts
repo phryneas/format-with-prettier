@@ -1,4 +1,4 @@
-import { defaultOptions, getOption, getOptions, onOptionChange, setOption } from "../options";
+import { defaultOptions, getOption, getOptions, ExtensionOptions, setOption } from "../options";
 import { parsersByName } from "../plugins";
 import { FormatRequest, FormatResponse } from "../types";
 
@@ -7,8 +7,9 @@ init().catch((e) => {
 });
 
 async function init() {
-  const $template = document.getElementById("parser-template")! as HTMLTemplateElement;
+  const $checkboxTemplate = document.getElementById("checkbox-template")! as HTMLTemplateElement;
   const $parsers = document.getElementById("parsers")!;
+  const $other = document.getElementById("other")!;
   const $prettierOptions: HTMLTextAreaElement = document.querySelector('[name="prettier-options"]')!;
   const $prettierOptionsReset = document.getElementById("prettier-options-reset")!;
   const $prettierOptionsErrors = document.getElementById("prettier-options-errors")!;
@@ -52,29 +53,54 @@ ${e?.toString()}`;
     }
   };
 
-  for (const parser of Object.values(parsersByName)) {
-    const $elem = document.importNode($template.content, true);
+  addCheckbox({
+    label: "alert on error",
+    checked: options.alertOnFormatError,
+    onChange(newValue) {
+      setOption("alertOnFormatError", newValue);
+    },
+    parent: $other,
+  });
+  addCheckbox({
+    label: "rethrow ebmed errors",
+    checked: options.rethrowEmbedErrors,
+    onChange(newValue) {
+      setOption("rethrowEmbedErrors", newValue);
+    },
+    parent: $other,
+  });
 
-    const $description = $elem.querySelector(".description")!;
+  for (const parser of Object.values(parsersByName)) {
+    addCheckbox({
+      label: `${parser.parser}: ${parser.description} (${parser.pluginName})`,
+      async onChange(newValue) {
+        const oldParsers = await getOption("enabledParsers");
+        await setOption("enabledParsers", newValue ? oldParsers.concat(parser.parser) : oldParsers.filter((p) => p != parser.parser));
+      },
+      checked: options.enabledParsers.includes(parser.parser),
+      parent: $parsers,
+    });
+  }
+
+  function addCheckbox({
+    label,
+    onChange,
+    checked,
+    parent,
+  }: {
+    label: string;
+    onChange: (newValue: boolean) => void;
+    checked: boolean;
+    parent: HTMLElement;
+  }) {
+    const $elem = document.importNode($checkboxTemplate.content, true);
+
+    const $label = $elem.querySelector(".description")!;
     const $input: HTMLInputElement = $elem.querySelector("input")!;
 
-    $description.textContent = `${parser.description} (${parser.pluginName})`;
-
-    $input.onchange = async () => {
-      const oldParsers = await getOption("enabledParsers");
-      if (!$input.checked) {
-        await setOption(
-          "enabledParsers",
-          oldParsers.filter((p) => p != parser.parser)
-        );
-      } else {
-        await setOption("enabledParsers", oldParsers.concat(parser.parser));
-      }
-    };
-    if (options.enabledParsers.includes(parser.parser)) {
-      $input.checked = true;
-    }
-
-    $parsers.append($elem);
+    $label.textContent = label;
+    $input.checked = checked;
+    $input.onchange = () => onChange($input.checked);
+    parent.append($elem);
   }
 }

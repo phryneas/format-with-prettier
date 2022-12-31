@@ -33,22 +33,24 @@ const defaultPrettierOptions = `{
 export const defaultOptions = {
   enabledParsers: ["babel", "typescript", "markdown", "html", "json5"] as AvailableParser[],
   prettierOptions: defaultPrettierOptions,
+  alertOnFormatError: true,
+  rethrowEmbedErrors: true,
 };
-type Options = typeof defaultOptions;
+export type ExtensionOptions = typeof defaultOptions;
 
 export async function getOptions() {
-  return storage.sync.get(defaultOptions) as Promise<Options>;
+  return storage.sync.get(defaultOptions) as Promise<ExtensionOptions>;
 }
 
-export async function getOption<K extends keyof Options>(option: K): Promise<Options[K]> {
+export async function getOption<K extends keyof ExtensionOptions>(option: K): Promise<ExtensionOptions[K]> {
   return (await getOptions())[option];
 }
 
-export function setOption<K extends keyof Options>(option: K, value: Options[K]) {
+export function setOption<K extends keyof ExtensionOptions>(option: K, value: ExtensionOptions[K]) {
   return storage.sync.set({ [option]: value });
 }
 
-export function onOptionChange<K extends keyof Options>(option: K, handler: () => void) {
+export function onOptionChange<K extends keyof ExtensionOptions>(option: K, handler: () => void) {
   storage.sync.onChanged.addListener((changes) => {
     if (option in changes) {
       handler();

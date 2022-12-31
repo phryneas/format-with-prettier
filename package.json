@@ -10,7 +10,6 @@
     "assert": "^2.0.0",
     "buffer": "^5.5.0",
     "crypto-browserify": "^3.12.0",
-    "json5": "2.2.2",
     "os-browserify": "^0.3.0",
     "parcel": "^2.8.2",
     "path-browserify": "^1.0.0",
@@ -37,7 +36,8 @@
     "@babel/parser": "^7.20.7",
     "parcel-transformer-replace": "workspace:^",
     "prettier": "^2.8.1",
-    "remark-parse": "^10.0.1"
+    "remark-parse": "^10.0.1",
+    "json5": "2.2.2"
   },
   "packageManager": "yarn@3.3.1",
   "workspaces": [

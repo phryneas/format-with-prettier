@@ -1,8 +1,8 @@
-import { Options as FormatOptions } from "prettier";
-import { Tabs } from "webextension-polyfill";
+import type { Options as FormatOptions } from "prettier";
+import type { Tabs } from "webextension-polyfill";
 import { getOption, onOptionChange } from "./options";
 import { AvailableParser, getEnabledParsersWithName, getEnabledPluginsByParserName } from "./plugins";
-import { FormatRequest, FormatResponse } from "./types";
+import type { FormatRequest, FormatResponse } from "./types";
 import { parse as parseJson } from "json5";
 
 const prettier = import("prettier/standalone");
@@ -29,16 +29,21 @@ const prettier = import("prettier/standalone");
     browser.runtime.onMessage.addListener(async (request: FormatRequest): Promise<FormatResponse> => {
       try {
         const format = (await prettier).format;
+        const { extraParsers = [], ...requestOptions } = request.options;
+
         const options: FormatOptions = {
           ...parseJson(await getOption("prettierOptions")),
-          ...request.options,
+          ...requestOptions,
           ...parseJson(request.unparsedOptions ?? "{}"),
           plugins: await getEnabledPluginsByParserName([
-            ...(request.options.extraParsers || []),
+            ...extraParsers,
             ...(await getOption("enabledParsers")),
-            request.options.parser as AvailableParser,
+            requestOptions.parser as AvailableParser,
           ]),
         };
+        if (await getOption("rethrowEmbedErrors")) {
+          globalThis.PRETTIER_DEBUG = true;
+        }
         return {
           formatted: format(request.code, options),
         };
@@ -48,6 +53,8 @@ const prettier = import("prettier/standalone");
           error: `Error while formatting: 
 ${e?.toString()}`,
         };
+      } finally {
+        globalThis.PRETTIER_DEBUG = undefined;
       }
     });
 

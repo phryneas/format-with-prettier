@@ -1,6 +1,3 @@
-import { Browser } from "webextension-polyfill";
-import { AvailableParser } from "./plugins";
-declare global {
-  const browser: Browser;
-  function __prettierTextArea(parser: AvailableParser): void;
-}
+var browser: import("webextension-polyfill").Browser;
+function __prettierTextArea(parser: import("./plugins").AvailableParser): void;
+var PRETTIER_DEBUG: boolean | undefined;
