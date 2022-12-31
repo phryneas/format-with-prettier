@@ -3,6 +3,8 @@ import { Tabs } from "webextension-polyfill";
 import { getOption, onOptionChange } from "./options";
 import { AvailableParser, getEnabledParsersWithName, getEnabledPluginsByParserName } from "./plugins";
 import { FormatRequest, FormatResponse } from "./types";
+import { parse as parseJson } from "json5";
+
 const prettier = import("prettier/standalone");
 
 (async function () {
@@ -28,8 +30,9 @@ const prettier = import("prettier/standalone");
       try {
         const format = (await prettier).format;
         const options: FormatOptions = {
-          ...JSON.parse(await getOption("prettierOptions")),
+          ...parseJson(await getOption("prettierOptions")),
           ...request.options,
+          ...parseJson(request.unparsedOptions ?? "{}"),
           plugins: await getEnabledPluginsByParserName([
             ...(request.options.extraParsers || []),
             ...(await getOption("enabledParsers")),

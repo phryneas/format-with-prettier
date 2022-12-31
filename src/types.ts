@@ -15,6 +15,7 @@ declare module "prettier" {
 export interface FormatRequest {
   code: string;
   options: Partial<Options>;
+  unparsedOptions?: string;
 }
 export interface FormatResponse {
   formatted: string;

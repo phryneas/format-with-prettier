@@ -6,16 +6,21 @@
   </head>
   <body>
     <h1>Format with Prettier</h1>
-    <h2>Prettier Options</h2>
-    <span id="prettier-options-errors"></span>
-    <textarea name="prettier-options"></textarea>
-    <h2>Parsers</h2>
-    <ul id="parsers"></ul>
-    <template id="parser-template">
-      <li>
-        <label><input type="checkbox" name="parser" /><span class="description"></span></label>
-      </li>
-    </template>
+    <section>
+      <h2>Prettier Options</h2>
+      <span id="prettier-options-errors"></span>
+      <textarea name="prettier-options"></textarea>
+      <button id="prettier-options-reset" style="align-self: end">reset to defaults</button>
+    </section>
+    <section>
+      <h2>Parsers</h2>
+      <ul id="parsers" style="list-style: none; padding-left: 0"></ul>
+      <template id="parser-template">
+        <li>
+          <label><input type="checkbox" name="parser" /><span class="description"></span></label>
+        </li>
+      </template>
+    </section>
 
     <script type="module" src="options-script.ts"></script>
   </body>

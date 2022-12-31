@@ -1,8 +1,8 @@
 import { AvailableParser } from "./plugins";
-import type { Options as FormatOptions } from "prettier";
 import { storage } from "webextension-polyfill";
 
-const defaultPrettierOptions: FormatOptions = {
+const defaultPrettierOptions = `{
+  // see https://prettier.io/docs/en/options.html
   printWidth: 80,
   useTabs: false,
   tabWidth: 2,
@@ -19,12 +19,20 @@ const defaultPrettierOptions: FormatOptions = {
   endOfLine: "auto",
   embeddedLanguageFormatting: "auto",
   singleAttributePerLine: false,
+  /**
+   * Here you can specify parsers of plugins that should be loaded,
+   * even if they are not checked down below.
+   * E.g. if you only want the "Markdown" context menu,
+   * but still want js blocks to be formatted, you can set:
+   * extraParsers: [ 'babel' ]
+   */
   extraParsers: [],
-};
+}
+`;
 
-const defaultOptions = {
+export const defaultOptions = {
   enabledParsers: ["babel", "typescript", "markdown", "html", "json5"] as AvailableParser[],
-  prettierOptions: JSON.stringify(defaultPrettierOptions),
+  prettierOptions: defaultPrettierOptions,
 };
 type Options = typeof defaultOptions;
 

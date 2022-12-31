@@ -3295,6 +3295,7 @@ __metadata:
     assert: ^2.0.0
     buffer: ^5.5.0
     crypto-browserify: ^3.12.0
+    json5: 2.2.2
     os-browserify: ^0.3.0
     parcel: ^2.8.2
     parcel-transformer-replace: "workspace:^"
@@ -4288,7 +4289,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"json5@npm:^2.2.0, json5@npm:^2.2.1":
+"json5@npm:2.2.2, json5@npm:^2.2.0, json5@npm:^2.2.1":
   version: 2.2.2
   resolution: "json5@npm:2.2.2"
   bin:

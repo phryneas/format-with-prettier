@@ -1,4 +1,4 @@
-import { getOption, getOptions, onOptionChange, setOption } from "../options";
+import { defaultOptions, getOption, getOptions, onOptionChange, setOption } from "../options";
 import { parsersByName } from "../plugins";
 import { FormatRequest, FormatResponse } from "../types";
 
@@ -10,7 +10,15 @@ async function init() {
   const $template = document.getElementById("parser-template")! as HTMLTemplateElement;
   const $parsers = document.getElementById("parsers")!;
   const $prettierOptions: HTMLTextAreaElement = document.querySelector('[name="prettier-options"]')!;
+  const $prettierOptionsReset = document.getElementById("prettier-options-reset")!;
   const $prettierOptionsErrors = document.getElementById("prettier-options-errors")!;
+
+  $prettierOptionsReset.onclick = () => {
+    if (confirm("do you really want to reset the prettier options to the default value?")) {
+      $prettierOptions.value = defaultOptions.prettierOptions;
+      $prettierOptions.onblur?.(new FocusEvent("blur"));
+    }
+  };
 
   const options = await getOptions();
 
@@ -23,10 +31,10 @@ async function init() {
   $prettierOptions.onblur = async () => {
     try {
       const value = $prettierOptions.value;
-      const parsedOptions = JSON.parse(value);
       const request: FormatRequest = {
         code: $prettierOptions.value,
-        options: { ...parsedOptions, parser: "json" },
+        options: { parser: "json5" },
+        unparsedOptions: value,
       };
       const response: FormatResponse = await browser.runtime.sendMessage(request);
       await setOption("prettierOptions", response.formatted);
