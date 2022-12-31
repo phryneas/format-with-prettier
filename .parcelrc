@@ -1,3 +1,11 @@
 {
-  "extends": "@parcel/config-webextension"
+  "extends": "@parcel/config-webextension",
+  "transformers": {
+    "*.{js,mjs,jsm,jsx,es6,cjs,ts,tsx}": [
+      "parcel-transformer-replace",
+      "@parcel/transformer-babel",
+      "@parcel/transformer-js",
+      "@parcel/transformer-react-refresh-wrap"
+    ]
+  }
 }

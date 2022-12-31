@@ -21,22 +21,27 @@
     "webextension-polyfill": "^0.10.0"
   },
   "scripts": {
-    "watch": "npm run parcel:start",
-    "build": "npm run parcel:build && npm run ext:build",
+    "watch": "npm run clean && npm run parcel:start",
+    "build": "npm run clean && npm run parcel:build && npm run ext:build",
     "lint": "npm run ext:lint",
     "firefox": "npm run ext:run",
+    "clean": "rimraf dist",
     "parcel:start": "parcel watch src/manifest.json --host localhost",
     "parcel:build": "parcel build src/manifest.json",
     "ext:run": "web-ext run -s ./dist --devtools",
-    "ext:build": "web-ext run -s ./dist",
+    "ext:build": "true || web-ext run -s ./dist",
     "ext:lint": "web-ext lint -s ./dist"
   },
   "dependencies": {
     "@babel/parser": "^7.20.7",
+    "parcel-transformer-replace": "workspace:^",
     "prettier": "^2.8.1",
     "remark-parse": "^10.0.1"
   },
   "packageManager": "yarn@3.3.1",
+  "workspaces": [
+    "./parcel-transformer-replace"
+  ],
   "resolutions": {
     "@parcel/transformer-webextension": "patch:@parcel/transformer-webextension@npm%3A2.8.2#./.yarn/patches/@parcel-transformer-webextension-npm-2.8.2-0a4803c81c.patch"
   }

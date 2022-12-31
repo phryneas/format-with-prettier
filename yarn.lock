@@ -3297,6 +3297,7 @@ __metadata:
     crypto-browserify: ^3.12.0
     os-browserify: ^0.3.0
     parcel: ^2.8.2
+    parcel-transformer-replace: "workspace:^"
     path-browserify: ^1.0.0
     prettier: ^2.8.1
     remark-parse: ^10.0.1
@@ -5687,6 +5688,14 @@ __metadata:
   checksum: 1be2bfa1f807608c7538afa15d6f25baa523c30ec870a3228a89579e474a4d992f4293859524e46d5d87fd30fa17c5edf34dbef0671251d9749820b488660b16
   languageName: node
   linkType: hard
+
+"parcel-transformer-replace@workspace:^, parcel-transformer-replace@workspace:parcel-transformer-replace":
+  version: 0.0.0-use.local
+  resolution: "parcel-transformer-replace@workspace:parcel-transformer-replace"
+  dependencies:
+    "@parcel/plugin": 2.8.2
+  languageName: unknown
+  linkType: soft
 
 "parcel@npm:^2.8.2":
   version: 2.8.2
