@@ -1,0 +1,15 @@
+diff --git a/lib/WebExtensionTransformer.js b/lib/WebExtensionTransformer.js
+index eebb41184db7ebac344ee745698daf45b93bdd25..f78332c85f21bb72b46928e5c6d995c21305f67a 100644
+--- a/lib/WebExtensionTransformer.js
++++ b/lib/WebExtensionTransformer.js
+@@ -411,8 +411,8 @@ var _default = new (_plugin().Transformer)({
+         browsers: asset.env.engines.browsers
+       },
+       sourceMap: asset.env.sourceMap && { ...asset.env.sourceMap,
+-        inline: true,
+-        inlineSources: true
++        inline: false,
++        inlineSources: false
+       },
+       includeNodeModules: asset.env.includeNodeModules,
+       sourceType: asset.env.sourceType,

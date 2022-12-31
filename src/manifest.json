@@ -1,6 +1,6 @@
 {
   "manifest_version": 2,
-  "name": "prettier-textarea",
+  "name": "Format with Prettier",
   "description": "Use prettier from your browser!",
   "version": "0.0.1",
   "background": {
@@ -11,5 +11,6 @@
   },
   "options_ui": {
     "page": "options/index.html"
-  }
+  },
+  "permissions": ["activeTab", "contextMenus", "clipboardWrite"]
 }
