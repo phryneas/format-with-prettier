@@ -14,9 +14,9 @@ export const plugins = [
       babel: "JavaScript",
       "babel-ts": "TypeScript",
       "babel-flow": "Flow",
-      json: "Flow",
-      json5: "Flow",
-      "json-stringify": "Flow",
+      json: "JSON",
+      json5: "JSON5",
+      "json-stringify": "json-stringify",
     },
   },
   {
@@ -66,18 +66,12 @@ export const plugins = [
   // meriyah: "JavaScript (Meriyah)",
 ] as const satisfies readonly PluginDescription[];
 
-type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends (
-  k: infer I
-) => void
-  ? I
-  : never;
+type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends (k: infer I) => void ? I : never;
 
 type PluginDefs = typeof plugins;
-export type AvailableParser = keyof UnionToIntersection<
-  PluginDefs[number]["types"]
->;
+export type AvailableParser = keyof UnionToIntersection<PluginDefs[number]["types"]>;
 
-const parsersByName = Object.fromEntries(
+export const parsersByName = Object.fromEntries(
   plugins.flatMap(({ name, plugin, types }) =>
     Object.entries(types).map(
       ([parser, description]) =>
@@ -95,12 +89,10 @@ const parsersByName = Object.fromEntries(
 );
 
 export function getEnabledParsersWithName(enabledParsers: AvailableParser[]) {
-  return enabledParsers.map((parser) => parsersByName[parser]);
+  return Object.values(parsersByName).filter((p) => enabledParsers.includes(p.parser));
 }
 
-export async function getEnabledPluginsByParserName(
-  enabledParsers: AvailableParser[]
-): Promise<PrettierPlugin[]> {
+export async function getEnabledPluginsByParserName(enabledParsers: AvailableParser[]): Promise<PrettierPlugin[]> {
   const pluginLoaders = new Set<() => Promise<PrettierPlugin>>();
   for (const parser of enabledParsers) {
     pluginLoaders.add(parsersByName[parser].plugin);

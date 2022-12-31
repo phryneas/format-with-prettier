@@ -2,23 +2,11 @@ import type { Options as FormatOptions } from "prettier";
 import { AvailableParser } from "./plugins";
 import { FormatRequest, FormatResponse } from "./types";
 
-function requireWebAccessibleResource(mod: string) {
-  const url = browser.runtime.getURL(`up_/node_modules/${mod}.js`);
-  console.log(url);
-  return import(url);
-}
-
 async function __prettierTextArea(parser: AvailableParser) {
-  console.log({ parser });
   try {
-    const element = [
-      document.activeElement,
-      document.querySelector(":focus"),
-    ].find(
+    const element = [document.activeElement, document.querySelector(":focus")].find(
       (element): element is HTMLInputElement | HTMLTextAreaElement =>
-        !!element &&
-        (element instanceof HTMLInputElement ||
-          element instanceof HTMLTextAreaElement)
+        !!element && (element instanceof HTMLInputElement || element instanceof HTMLTextAreaElement)
     );
 
     if (!element) return;
@@ -26,11 +14,7 @@ async function __prettierTextArea(parser: AvailableParser) {
     const options: FormatOptions = {
       parser,
     };
-    if (
-      element.selectionStart != null &&
-      element.selectionEnd != null &&
-      element.selectionStart != element.selectionEnd
-    ) {
+    if (element.selectionStart != null && element.selectionEnd != null && element.selectionStart != element.selectionEnd) {
       options.rangeStart = element.selectionStart;
       options.rangeEnd = element.selectionEnd;
     }
@@ -41,7 +25,10 @@ async function __prettierTextArea(parser: AvailableParser) {
     const response: FormatResponse = await browser.runtime.sendMessage(request);
     element.value = response.formatted;
   } catch (e) {
-    console.log(e);
+    const msg = `formatting with parser ${parser} failed: 
+    ${e?.toString()}`;
+    alert(msg);
+    console.error(msg);
   }
 }
 

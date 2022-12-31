@@ -1,16 +1,20 @@
 {
+  "$schema": "https://json.schemastore.org/webextension.json",
   "manifest_version": 2,
   "name": "Format with Prettier",
   "description": "Use prettier from your browser!",
   "version": "0.0.1",
   "background": {
-    "scripts": [
-      "../node_modules/webextension-polyfill/dist/browser-polyfill.js",
-      "background.ts"
-    ]
+    "scripts": ["../node_modules/webextension-polyfill/dist/browser-polyfill.js", "background.ts"]
   },
   "options_ui": {
-    "page": "options/index.html"
+    "page": "options/index.html",
+    "browser_style": true
   },
-  "permissions": ["activeTab", "contextMenus", "clipboardWrite"]
+  "permissions": ["activeTab", "contextMenus", "clipboardWrite", "storage"],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "format-with-prettier@phryneas.de"
+    }
+  }
 }
