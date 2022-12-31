@@ -1,4 +1,5 @@
 .parcel-cache
+web-ext-artifacts
 yarn-error.log
 dist
 node_modules

@@ -29,7 +29,7 @@
     "parcel:start": "parcel watch src/manifest.json --host localhost",
     "parcel:build": "parcel build src/manifest.json",
     "ext:run": "web-ext run -s ./dist --devtools",
-    "ext:build": "true || web-ext run -s ./dist",
+    "ext:build": "web-ext build -s ./dist",
     "ext:lint": "web-ext lint -s ./dist"
   },
   "dependencies": {
